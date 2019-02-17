@@ -1,50 +1,37 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	<title>你好，GitHub</title>
-</head>
-<body>
-	<h1>覺得wawaa厲害</h1>
-	<div class="col-md-3">
-		<div class="input-group">
-			<input id="inputid" value="437292675" class="form-control" placeholder="id">
-			<div class="input-group-append">
-				<button id="button" class="btn btn-secondary" type="button">
-					<i class="fa fa-search">G</i>
-				</button>
-			</div>
-		</div>
-		<div class="meta">
-			<audio id="play" controls>
-				<source  type="audio/mpeg"></source>
-			</audio>
-			<p id = "text"></p>
-			</div>
+---
+layout: default
+title: Home
+---
 
-	</div>
+<div class="posts">
+  {% for post in paginator.posts %}
+  <div class="post">
+    <h1 class="post-title">
+      <a href="{{ post.url }}">
+        {{ post.title }}
+      </a>
+    </h1>
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-	<script type="text/javascript">$("button").click(function(){
-		fetch('https://api.imjad.cn/cloudmusic/?type=song&br=320000&id='+$("#inputid").val())
-		.then(function(response) {
-        	return response.json()
-     	 }).then(function(body) {
-     	 	console.log(body.data[0].url);
-        	$("#play").attr("src",body.data[0].url);
-        	$("#play").attr("autoplay","");
-  		})
-		.catch(error => console.error(error))
-		});
-        </script>
-	<!-- <script>
-				window.onload = function() {  // reload file every second
-					setInterval(function() { location.reload(); } , 1000);
-				};
-			</script> -->
-		</body>	
-		</html>
+    <span class="post-date">{{ post.date | date_to_string }}</span>
+
+    {{ post.content }}
+  </div>
+  {% endfor %}
+</div>
+
+<div class="pagination">
+  {% if paginator.next_page %}
+    <a class="pagination-item older" href="{{ site.baseurl }}page{{paginator.next_page}}">Older</a>
+  {% else %}
+    <span class="pagination-item older">Older</span>
+  {% endif %}
+  {% if paginator.previous_page %}
+    {% if paginator.page == 2 %}
+      <a class="pagination-item newer" href="{{ site.baseurl }}">Newer</a>
+    {% else %}
+      <a class="pagination-item newer" href="{{ site.baseurl }}page{{paginator.previous_page}}">Newer</a>
+    {% endif %}
+  {% else %}
+    <span class="pagination-item newer">Newer</span>
+  {% endif %}
+</div>
