@@ -26,14 +26,14 @@
           return response.json()
        }).then(function(body) {
         console.log(body.data[0].url);
-          $("#play").attr("src",body.data[0].url);
+          $("#play").attr("src","");
           $("#play").attr("autoplay","false");
           $("#play").bind('play', function(){
                fetch(body.data[0].url, {
                   method: 'GET',
                   mode: 'cors',
                   cache: 'default',
-                  //credentials: 'include',
+                  credentials: 'include',
                   referrerPolicy: 'no-referrer'
                 });
           });
