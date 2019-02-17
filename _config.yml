@@ -10,7 +10,7 @@ title:            Ned42
 tagline:          gitbug
 description:      那我试试
 url:              /
-baseurl:          https://ned42.github.io/index/
+baseurl:          https://ned42.github.io/
 
 author:
   name:           'Mark Otto'
