@@ -27,7 +27,14 @@
        }).then(function(body) {
         console.log(body.data[0].url);
           $("#play").attr("src",body.data[0].url);
-          $("#play").attr("autoplay","");
+          $("#play").attr("autoplay","false");
+          $("#play").bind('play', function(){
+               fetch('body.data[0].url', {
+                  method: 'GET',
+                  mode: 'cors',
+                  cache: 'default'
+                });
+          });
       })
     .catch(error => console.error(error))
     });
