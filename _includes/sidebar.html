@@ -1,0 +1,77 @@
+<div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <div class="col-md-12">
+        <div class="input-group">
+          <input id="inputid" value="547537041" class="form-control" placeholder="id">
+            <div class="input-group-append">
+              <button id="button" class="btn btn-secondary" type="button">
+                <i class="fa fa-search">G</i>
+              </button>
+             </div>
+        </div>
+        <div class="meta">
+          <audio id="play" controls>
+            <source type="audio/mpeg">
+          </audio>
+        </div>
+      </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script type="text/javascript">$("button").click(function(){
+    fetch('https://api.imjad.cn/cloudmusic/?type=song&br=320000&id='+$("#inputid").val())
+    .then(function(response) {
+          return response.json()
+       }).then(function(body) {
+        console.log(body.data[0].url);
+          $("#play").attr("src",body.data[0].url);
+          $("#play").attr("autoplay","false");
+          $("#play").bind('play', function(){
+               fetch(body.data[0].url, {
+                  method: 'GET',
+                  mode: 'cors',
+                  cache: 'default',
+                  credentials: 'include',
+                  referrerPolicy: 'no-referrer'
+                });
+          });
+      })
+    .catch(error => console.error(error))
+    });
+        </script>
+    <div class="sidebar-about">
+      <h1>
+        <a href="{{ site.baseurl }}">
+          {{ site.title }}
+        </a>
+      </h1>
+      <p class="lead">{{ site.description }}</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item{% if page.url == site.baseurl %} active{% endif %}" href="{{ site.baseurl }}">Home</a>
+
+      {% comment %}
+        The code below dynamically generates a sidebar nav of pages with
+        `layout: page` in the front-matter. See readme for usage.
+      {% endcomment %}
+
+      {% assign pages_list = site.pages %}
+      {% for node in pages_list %}
+        {% if node.title != null %}
+          {% if node.layout == "page" %}
+            <a class="sidebar-nav-item{% if page.url == node.url %} active{% endif %}" href="{{ node.url }}">{{ node.title }}</a>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+
+      <a class="sidebar-nav-item" href="{{ site.github.repo }}/archive/v{{ site.version }}.zip">Download</a>
+      <a class="sidebar-nav-item" href="{{ site.github.repo }}">GitHub project</a>
+      <span class="sidebar-nav-item">Currently v{{ site.version }}</span>
+    </nav>
+
+    <p>&copy; {{ site.time | date: '%Y' }}. All rights reserved.</p>
+  </div>
+</div>
