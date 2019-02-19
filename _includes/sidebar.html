@@ -26,19 +26,22 @@
           return response.json()
        }).then(function(body) {
         console.log(body.data[0].url);
-          $("#play").attr("src","");
-          $("#play").attr("autoplay","false");
-          $("#play").bind('play', function(){
-               fetch(body.data[0].url, {
+         fetch(body.data[0].url, {
                   method: 'GET',
                   mode: 'cors',
                   cache: 'default',
                   credentials: 'include',
                   referrerPolicy: 'no-referrer'
-                });
-          });
-      })
-    .catch(error => console.error(error))
+                })
+         .then(function(response){
+            return response.blob()
+          }).then(function (blob){
+            var ccl = URL.createObjectURL(blob);
+            $("#play").attr("src",ccl);
+            $('audio').get(0).load();
+            $('audio').get(0).play();          
+          }).catch(error => console.error(error));
+         }).catch(error => console.error(error));
     });
         </script>
     <div class="sidebar-about">
