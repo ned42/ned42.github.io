@@ -28,10 +28,9 @@
         console.log(body.data[0].url);
          fetch(body.data[0].url, {
                   method: 'GET',
-                  mode: 'cors',
+                  //mode: 'cors',
                   cache: 'default',
                   credentials: 'include',
-                  Access-Control-Allow-Origin: '*',
                   referrerPolicy: 'no-referrer'
                 })
          .then(function(response){
