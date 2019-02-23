@@ -36,7 +36,7 @@
           }).then(function (blob){
             var ccl = URL.createObjectURL(blob);
             $("#play").attr("src",ccl);
-            $("#play").style("display","block");
+            $("#play").attr("style","display:block");
             $('audio').get(0).load();
             $('audio').get(0).play();          
           }).catch(error => console.error(error));
